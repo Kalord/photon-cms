@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Rule;
-use App\Models\User;
+use App\User;
 
 class SetupCommand extends Command
 {
