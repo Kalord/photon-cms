@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/login', 'SiteController@login')->middleware('guest');
+Route::get('/registration', 'SiteController@registration')->middleware('guest');
+Route::get('/logout', 'SessionController@logout')->middleware('auth');
+
+Route::group(['prefix' => 'session'], function() {
+    Route::post('start', 'SessionController@start')->middleware('guest');
+});
