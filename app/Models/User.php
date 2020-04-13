@@ -1,14 +1,23 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
     use Notifiable;
+
+    const STATUS_ACTIVE = 3;
+
+    /**
+     * Current table
+     * @var string
+     */
+    protected $table = 'user';
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'login', 'email', 'password',
+        'name', 'login', 'email', 'password', 'id_rule', 'status'
     ];
 
     /**
@@ -36,4 +45,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Создание пользователя
+     *
+     * @param array $data
+     * @return User|null
+     */
+    public static function createUser(Array $data)
+    {
+        $data['password'] = Hash::make($data['password']);
+
+        return self::create($data);
+    }
 }
