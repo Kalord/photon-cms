@@ -1,12 +1,23 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * Class User
+ *
+ * @property $name
+ * @property $login
+ * @property $password
+ * @property $avatar
+ * @property $status
+ *
+ * @package App\Models
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -45,6 +56,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @param string $login
+     * @return User|null
+     */
+    public static function findByLogin($login)
+    {
+        return self::where('login', $login)->first();
+    }
 
     /**
      * Создание пользователя
