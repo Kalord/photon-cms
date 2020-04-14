@@ -28,3 +28,13 @@ Route::group(['prefix' => 'session'], function() {
 Route::group(['prefix' => 'user'], function() {
     Route::post('create', 'UserController@create')->middleware('guest');
 });
+
+Route::group(['prefix' => 'admin/module'], function() {
+    Route::get('', 'ModuleController@index')->middleware('auth');
+});
+
+Route::group(['prefix' => 'admin/post'], function() {
+    Route::get('', 'PostController@index')->middleware('auth');
+    Route::get('create', 'PostController@publish')->middleware('auth');
+    Route::post('create', 'PostController@create')->middleware('auth');
+});
