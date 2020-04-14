@@ -8,8 +8,10 @@ const handler = (targetForm, success, error, async = false) => {
         type: $(targetForm).attr('method'),
         url: $(targetForm).attr('action'),
         dataType: "json",
-        data: formData,
+        contentType: false,
+        processData: false,
         async: async,
+        data: formData,
         success: success,
         error: error
     });
