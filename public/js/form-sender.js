@@ -2,11 +2,23 @@
  * Обработчик отправленной формы
  */
 const handler = (targetForm, success, error, async = false) => {
-    let formData = new FormData(targetForm);
+    let formData;
+    let type;
+    let url;
+
+    if (typeof targetForm == 'object') {
+        formData = targetForm;
+        type = targetForm.type;
+        url = targetForm.url;
+    } else {
+        formData = new FormData(targetForm);
+        type = $(targetForm).attr('method');
+        url = $(targetForm).attr('action');
+    }
 
     $.ajax({
-        type: $(targetForm).attr('method'),
-        url: $(targetForm).attr('action'),
+        type: type,
+        url: url,
         dataType: "json",
         contentType: false,
         processData: false,
@@ -16,3 +28,9 @@ const handler = (targetForm, success, error, async = false) => {
         error: error
     });
 };
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
