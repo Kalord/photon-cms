@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    var_dump(Auth()->user());
 });
 
 Route::get('/login', 'SiteController@login')->middleware('guest');
@@ -23,4 +23,8 @@ Route::get('/logout', 'SessionController@logout')->middleware('auth');
 
 Route::group(['prefix' => 'session'], function() {
     Route::post('start', 'SessionController@start')->middleware('guest');
+});
+
+Route::group(['prefix' => 'user'], function() {
+    Route::post('create', 'UserController@create')->middleware('guest');
 });
