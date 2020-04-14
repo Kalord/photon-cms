@@ -58,6 +58,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getRuleTitle()
+    {
+        return Rule::find($this->id_rule)->first()->title;
+    }
+
     /**
      * @param string $login
      * @return User|null
