@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Rule;
 
 /**
  * Class User
@@ -75,6 +76,7 @@ class User extends Authenticatable
     public static function createUser(Array $data)
     {
         $data['password'] = Hash::make($data['password']);
+        $data['id_rule']  = Rule::findRuleByTitle('User')->id; //Fix  
 
         return self::create($data);
     }
