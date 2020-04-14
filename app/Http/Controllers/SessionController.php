@@ -14,7 +14,9 @@ class SessionController extends Controller
      */
     public function start(StartSessionRequest $request)
     {
-        return Auth()->login(User::findByLogin($request->input('login')));
+        $user = User::findByLogin($request->input('login'));
+        Auth()->login($user);
+        return $user;
     }
 
     /**
