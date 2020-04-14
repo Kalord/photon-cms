@@ -32,7 +32,11 @@
                     </button>
                 </div>
 
-                <div class="alert alert-danger error-message" style="margin-top: 10px; display: none;">
+                <div style="margin-top: 10px;text-align: center;">
+                    <span>У вас нет аккаунта? <a href="/registration">Зарегистрируйтесь</a></span>
+                </div>    
+
+                <div class="alert alert-danger error-message" style="display: none; margin-top: 10px;">
 
                 </div>
             </form>
