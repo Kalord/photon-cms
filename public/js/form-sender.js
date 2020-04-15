@@ -34,9 +34,3 @@ const submitWithData = (type, url, data, success, error, async = false) => {
         error: error
     });
 };
-
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
