@@ -11,5 +11,5 @@ $('.login-form').submit((event) => {
         $('.error-message').html(getFirstProperty(html.responseJSON.errors)[0]);
     };
 
-    handler(event.target, success, error);
+    submitWithFormData(event.target, success, error);
 });

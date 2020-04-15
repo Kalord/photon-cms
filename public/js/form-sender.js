@@ -1,21 +1,27 @@
 /**
- * Обработчик отправленной формы
+ * Отправление данных с даннми из формы
+ * @param {HTML} targetForm
+ * @param {callbable} success
+ * @param {callbable} error
+ * @param {bool} async
  */
-const handler = (targetForm, success, error, async = false) => {
-    let formData;
-    let type;
-    let url;
+const submitWithFormData = (targetForm, success, error, async = false) => {
+    let formData = new FormData(targetForm);
 
-    if (typeof targetForm == 'object') {
-        formData = targetForm;
-        type = targetForm.type;
-        url = targetForm.url;
-    } else {
-        formData = new FormData(targetForm);
-        type = $(targetForm).attr('method');
-        url = $(targetForm).attr('action');
-    }
+    $.ajax({
+        type: $(targetForm).attr('method'),
+        url: $(targetForm).attr('action'),
+        dataType: "json",
+        contentType: false,
+        processData: false,
+        async: async,
+        data: formData,
+        success: success,
+        error: error
+    });
+};
 
+const submitWithData = (type, url, data, success, error, async = false) => {
     $.ajax({
         type: type,
         url: url,
@@ -23,7 +29,7 @@ const handler = (targetForm, success, error, async = false) => {
         contentType: false,
         processData: false,
         async: async,
-        data: formData,
+        data: data,
         success: success,
         error: error
     });

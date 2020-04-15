@@ -1,7 +1,5 @@
 const getEditorData = () => {
     return {
-        type: 'POST',
-        url: '/admin/post/create',
         title: $('.title').val(),
         description: $('.description').val(),
         keywords: $('.keywords').val(),
@@ -26,5 +24,5 @@ $('.btn-save').click((event) => {
         $('.error-message').html(getFirstProperty(html.responseJSON.errors)[0]);
     };
 
-    handler(data, success, error);
+    submitWithData('POST', '/admin/post/create', data, success, error);
 });
