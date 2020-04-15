@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="/assets/vendor/bootstrap-datepicker/css/datepicker3.css" />
 
     <!-- Specific Page Vendor CSS -->
-    @yield('specific_css');
+    @yield('specific_css')
 
     <!-- Theme CSS -->
     <link rel="stylesheet" href="/assets/stylesheets/theme.css" />
@@ -405,7 +405,7 @@
 
                 <section role="main" class="content-body">
                     <div class="row">
-                        @yield('content');
+                        @yield('content')
                     </div>
                 </section>
         </div>
@@ -437,6 +437,7 @@
         <script src="/js/common.js"></script>
         <script src="/js/form-sender.js"></script>
         <script src="/js/editor.js"></script>
+        <script src="/js/post.js"></script>
 
     </body>
 
