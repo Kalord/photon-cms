@@ -26,6 +26,19 @@ class PostController extends Controller
         return Post::createPost($request->input(), $request->file());
     }
 
+    public function publishUpdate($id)
+    {
+        return view('post.update', [
+            'post' => Post::findOrFail($id),
+            'categories' => Category::all()
+        ]);
+    }
+
+    public function update(CreatePostRequest $request)
+    {
+        
+    }
+
     public function find(Request $request)
     {
         return Post::findPosts($request->input());
