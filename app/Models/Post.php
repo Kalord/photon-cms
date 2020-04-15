@@ -13,6 +13,8 @@ class Post extends Model
     const STATUS_DRAFT = 1;
     const STATUS_ACTIVE = 2;
 
+    const DEFAULT_LIMIT = 10;
+
     /**
      * Current table
      * @var string
@@ -38,12 +40,12 @@ class Post extends Model
 
     public static function getUploadPathMainImg()
     {
-        return 'uploads/posts/main_img';
+        return 'uploads/posts/main_img/';
     }
 
     public static function getUploadPathResources()
     {
-        return 'uploads/posts/resources';
+        return 'uploads/posts/resources/';
     }
 
     /**
@@ -74,9 +76,59 @@ class Post extends Model
         );
     }
 
+    public static function findPosts(Array $findOptions)
+    {
+        $state = self::select('post.*', 'category.title AS category_title', 'user.name AS user_name')->
+                       orderBy('id', 'desc')->
+                       limit(self::DEFAULT_LIMIT);
+
+        $state->join('category', 'post.id_category', '=', 'category.id');
+        $state->join('user', 'post.id_user', '=', 'user.id');
+
+        if(isset($findOptions['pivot'])) 
+        {
+            $state->where('id', '<', $findOptions['pivot']);
+        }
+
+        return $state->get();
+    }
+
     public static function createPost(Array $data, Array $files)
     {
         self::prepareDataForCreate($data, $files);
         return self::create($data);
+    }
+
+    public static function setStatus($id, $status)
+    {
+        $post = self::findOrFail($id);
+        $post->status = $status;
+        $post->save();
+
+        return $status;
+    }
+
+    /**
+     * Сделать пост активным
+     */
+    public static function toActive($id)
+    {
+        return self::setStatus($id, self::STATUS_ACTIVE);
+    }
+
+    /**
+     * Переместить пост в черновик
+     */
+    public static function toDraft($id)
+    {
+        return self::setStatus($id, self::STATUS_DRAFT);
+    }
+
+    /**
+     * Переместить пост в корзину
+     */
+    public static function toTrash($id)
+    {
+        return self::setStatus($id, self::STATUS_DELETE);
     }
 }
