@@ -9,8 +9,7 @@ const cleanImg = () => {
 
     let imgs = $('.note-editable img');
 
-    for(let i = 0; i < imgs.length; i++)
-    {
+    for (let i = 0; i < imgs.length; i++) {
         let img = $(imgs[i]);
         imgSrc.push(img.attr('src'));
         img.attr('src', "");
@@ -24,8 +23,7 @@ const cleanImg = () => {
 const insertImg = () => {
     let imgs = $('.note-editable img');
 
-    for(let i = 0; i < imgs.length; i++)
-    {
+    for (let i = 0; i < imgs.length; i++) {
         let img = $(imgs[i]);
         let src = imgSrc[i];
         img.attr('src', src);
@@ -55,8 +53,7 @@ const getEditorData = () => {
 
     formData.append('_token', $('[name="_token"]').val());
     let files = getFiles();
-    for(let i = 0; i < files.length; i++)
-    {
+    for (let i = 0; i < files.length; i++) {
         formData.append(`resource-${i}`, files[i]);
     }
 
@@ -71,7 +68,7 @@ $('.btn-save').click((event) => {
     data.append('status', $(event.target).attr('data-status'));
 
     const success = (html) => {
-        console.log(html);
+        window.location.href = '/admin/post';
     };
 
     const error = (html) => {
