@@ -29,7 +29,7 @@
             <div class="form-group">
                 <label class="col-md-3 control-label" for="inputDefault">Заголовок</label>
                 <div class="col-md-6">
-                    <input type="text" class="form-control title" id="inputDefault">
+                    <input type="text" class="form-control input-title" id="inputDefault">
                 </div>
             </div>
             <div class="form-group">
