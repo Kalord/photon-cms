@@ -25,4 +25,29 @@ class PostController extends Controller
     {
         return Post::createPost($request->input(), $request->file());
     }
+
+    public function find(Request $request)
+    {
+        return Post::findPosts($request->input());
+    }
+
+    public function toActive(Request $request)
+    {
+        return Post::toActive($request->input('id'));
+    }
+
+    public function toDraft(Request $request)
+    {
+        return Post::toDraft($request->input('id'));
+    }
+
+    public function toTrash(Request $request)
+    {
+        return Post::toTrash($request->input('id'));
+    }
+
+    public function delete(Request $request)
+    {
+        return Post::delete($request->input('id'));
+    }
 }
