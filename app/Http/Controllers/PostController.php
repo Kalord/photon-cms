@@ -21,10 +21,8 @@ class PostController extends Controller
         ]);
     }
 
-    public function create(Request $request)
+    public function create(CreatePostRequest $request)
     {
-        var_dump($request->input());
-        die;
         return Post::createPost($request->input());
     }
 }
