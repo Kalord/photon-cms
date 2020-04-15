@@ -39,6 +39,8 @@ Route::group(['prefix' => 'admin/post'], function() {
     Route::get('', 'PostController@index')->middleware('auth');
     Route::get('create', 'PostController@publish')->middleware('auth');
     Route::post('create', 'PostController@create')->middleware('auth');
+    Route::get('update/{id}', 'PostController@publishUpdate')->middleware('auth');
+    Route::patch('update', 'PostController@update')->middleware('auth');
 });
 
 Route::group(['prefix' => 'admin/post/action'], function() {
