@@ -37,7 +37,7 @@ class CreatePostRequest extends FormRequest
             'description'   => 'required|max:160',
             'keywords'      => 'required|max:255',
             'id_category'   => "required|min:$minCategory|max:$maxCategory",
-            'main_img'      => 'required|mimes:jpeg,bmp,png',
+            'main_img'      => 'mimes:jpeg,bmp,png',
             'alt_main_img'  => 'required',
             'content'       => 'required|max:10000',
             'status'        => "required|min:$minStatus|max:$maxStatus"
