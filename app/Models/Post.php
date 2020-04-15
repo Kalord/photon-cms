@@ -25,20 +25,25 @@ class Post extends Model
      * @var array
      */
     protected $fillable = [
-        'title',        
-        'description',  
-        'keywords', 
-        'id_user',      
-        'id_category',  
+        'title',
+        'description',
+        'keywords',
+        'id_user',
+        'id_category',
         'main_img',
-        'alt_main_img', 
-        'content',      
+        'alt_main_img',
+        'content',
         'status'
     ];
 
-    public static function getUploadPath()
+    public static function getUploadPathMainImg()
     {
         return 'uploads/posts/main_img';
+    }
+
+    public static function getUploadPathResources()
+    {
+        return 'uploads/posts/resources';
     }
 
     /**
@@ -51,7 +56,7 @@ class Post extends Model
 
         return FileUploader::upload(
             $main_img,
-            self::getUploadPath(),
+            self::getUploadPathMainImg(),
             $fileName
         );
     }
@@ -60,12 +65,18 @@ class Post extends Model
     {
         $data['id_user'] = Auth()->id();
         $data['main_img'] = self::uploadMainImg($files['main_img']);
+        unset($files['main_img']);
+
+        $data['content'] = FileUploader::uploadResourceForPost(
+            $data['content'],
+            self::getUploadPathResources(),
+            $files
+        );
     }
 
     public static function createPost(Array $data, Array $files)
     {
         self::prepareDataForCreate($data, $files);
-
         return self::create($data);
     }
 }
