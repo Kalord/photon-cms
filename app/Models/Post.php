@@ -85,7 +85,7 @@ class Post extends Model
         $state->join('category', 'post.id_category', '=', 'category.id');
         $state->join('user', 'post.id_user', '=', 'user.id');
 
-        if(isset($findOptions['pivot'])) 
+        if(isset($findOptions['pivot']))
         {
             $state->where('id', '<', $findOptions['pivot']);
         }
