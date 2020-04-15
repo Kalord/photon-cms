@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Illuminate\Http\UploadedFile;
+use App\Models\FileUploader;
 
 class Post extends Model
 {
@@ -16,9 +19,52 @@ class Post extends Model
      */
     protected $table = 'post';
 
-    public static function createPost(Array $data)
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title',        
+        'description',  
+        'keywords', 
+        'id_user',      
+        'id_category',  
+        'main_img',
+        'alt_main_img', 
+        'content',      
+        'status'
+    ];
+
+    public static function getUploadPath()
+    {
+        return 'uploads/posts/main_img';
+    }
+
+    /**
+     * @param UploadedFile $main_img
+     * @return string путь до загруженного файла
+     */
+    private static function uploadMainImg(UploadedFile $main_img)
+    {
+        $fileName = Str::random(8) . '.' . $main_img->extension();
+
+        return FileUploader::upload(
+            $main_img,
+            self::getUploadPath(),
+            $fileName
+        );
+    }
+
+    private static function prepareDataForCreate(Array &$data, Array &$files)
     {
         $data['id_user'] = Auth()->id();
+        $data['main_img'] = self::uploadMainImg($files['main_img']);
+    }
+
+    public static function createPost(Array $data, Array $files)
+    {
+        self::prepareDataForCreate($data, $files);
 
         return self::create($data);
     }
