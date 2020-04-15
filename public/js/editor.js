@@ -1,7 +1,7 @@
 const getEditorData = () => {
     let formData = new FormData();
 
-    formData.append('title', $('.title').val());
+    formData.append('title', $('.input-title').val());
     formData.append('description', $('.description').val());
     formData.append('keywords', $('.keywords').val());
     formData.append('id_category', $('.categories option:selected').val());
