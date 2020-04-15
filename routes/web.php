@@ -20,6 +20,8 @@ Route::get('/', function () {
 Route::get('/login', 'SiteController@login')->middleware('guest');
 Route::get('/registration', 'SiteController@registration')->middleware('guest');
 Route::get('/logout', 'SessionController@logout')->middleware('auth');
+Route::get('/post/find', 'PostController@find');
+
 
 Route::group(['prefix' => 'session'], function() {
     Route::post('start', 'SessionController@start')->middleware('guest');
@@ -37,4 +39,12 @@ Route::group(['prefix' => 'admin/post'], function() {
     Route::get('', 'PostController@index')->middleware('auth');
     Route::get('create', 'PostController@publish')->middleware('auth');
     Route::post('create', 'PostController@create')->middleware('auth');
+});
+
+Route::group(['prefix' => 'admin/post/action'], function() {
+    Route::post('to-active', 'PostController@toActive')->middleware('auth');
+    Route::post('to-draft', 'PostController@toDraft')->middleware('auth');
+
+    Route::post('to-trash', 'PostController@toTrash')->middleware('auth');
+    Route::post('delete', 'PostController@delete')->middleware('auth');
 });
