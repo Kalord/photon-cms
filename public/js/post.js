@@ -41,8 +41,8 @@ const getStatusTitle = (status) => {
 const getActionButton = (status) => {
     if (status == 0) {
         return `
-            <a class="btn btn-primary" data-action="to-active" style="margin-top: 5px;">Восстановить</a>
-            <a class="btn btn-danger" data-action="delete" style="margin-top: 5px;">Удалить безвозратно</a>
+            <a class="btn btn-primary btn-action" data-action="to-active" style="margin-top: 5px;">Восстановить</a>
+            <a class="btn btn-danger btn-delete" data-action="delete" style="margin-top: 5px;">Удалить безвозратно</a>
         `
     }
 
@@ -97,8 +97,7 @@ const getActionHandler = (action) => {
     const actionHandler = {
         'to-active': '/admin/post/action/to-active',
         'to-draft': '/admin/post/action/to-draft',
-        'to-trash': '/admin/post/action/to-trash',
-        'detete': '/admin/post/action/delete'
+        'to-trash': '/admin/post/action/to-trash'
     }
 
     return actionHandler[action];
@@ -111,7 +110,22 @@ const btnActionHandler = (event) => {
     let newAction = changeStatus(id, getActionHandler(action));
 
     $(event.target).parent().html(newAction);
-    $('.btn-action').click(btnActionHandler);
+}
+
+const btnDeleteHandler = (event) => {
+    let id = $(event.target).parent().parent().attr('data-id');
+
+    $.ajax({
+        type: 'POST',
+        url: '/admin/post/action/delete',
+        data: {
+            id: id,
+            _token: $('[name="_token"]').val()
+        },
+        success: () => {
+            $(event.target).parent().parent().remove();
+        }
+    })
 }
 
 let showPosts = () => {
@@ -142,6 +156,7 @@ let showPosts = () => {
             });
 
             $('.btn-action').click(btnActionHandler);
+            $('.btn-delete').click(btnDeleteHandler);
         }
     })
 }
